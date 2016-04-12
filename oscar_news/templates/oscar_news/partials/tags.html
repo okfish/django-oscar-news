@@ -1,0 +1,19 @@
+{% load i18n %}{% spaceless %}
+<div class="news-tags">
+    <h3>{% trans "News Tags" %}</h3>
+    <ul class="news-tags">
+        {% for tag in tags %}
+            <li><a href="{% url 'oscar_news:tagged-list' tag=tag.slug %}" class="news-tag-{{ tag.pk }}">
+                {{ tag.name }}
+                <span>(
+                    {% if tag.count > 0 %}
+                    {% blocktrans count articles=tag.count %}1 article{% plural %}{{ articles }} articles{% endblocktrans %}
+                    {% else %}{% trans "0 articles" %}{% endif %}
+                )</span>
+            </a></li>
+        {% empty %}
+        <li class="news-empty"><p>{% trans "No article found." %}</p></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endspaceless %}

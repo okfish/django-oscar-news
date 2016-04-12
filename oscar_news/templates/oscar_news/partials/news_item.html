@@ -1,0 +1,28 @@
+{% load smart_load %}
+{% load i18n cms_tags %}
+{% load thumbnail from smart_load %}
+
+<article id="post-{{ post.slug }}" class="news-item">
+    <header>
+        <h3>{% if not category %}<a href="{{ post.category.get_absolute_url }}">{{ post.category.name }}</a>: {% endif %}<a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+    </header>
+    {% if image and post.images.all.count > 0 %}
+    <div class="news-visual">
+        {% thumbnail post.images.all.0 100x100 crop=true upscale=false subject_location=post.images.all.0.subject_location as thumb %}
+        <img src="{{ thumb.url }}" alt="{# post.main_image.default_alt_text #}" width="{{ thumb.width }}" height="{{ thumb.height }}" />
+    </div>
+    {% endif %}
+    <div class="news-lead">
+        {% if not TRUNCWORDS_COUNT %}
+            {% render_model post "description" %}
+        {% else %}
+            {% render_model post "description" "" "" 'truncatewords_html:TRUNCWORDS_COUNT'  %}
+        {% endif %}
+    </div>
+    <div class="news-tags">
+      {% include 'oscar_news/partials/tags.html' with tags=post.get_tags %}
+    </div>
+    <footer class="read-more">
+        <a href="{{ post.get_absolute_url }}">{% trans "read more" %} &raquo;</a>
+    </footer>
+</article>

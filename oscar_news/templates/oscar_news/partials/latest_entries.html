@@ -1,0 +1,11 @@
+{% load i18n %}{% spaceless %}
+<div class="plugin plugin-news">
+    <div class="news-latest-entries">
+    {% for entry in news_entries_list %}
+        {% include "oscar_news/partials/news_item.html" with post=entry image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+    {% empty %}
+    <p class="news-empty">{% trans "No article found." %}</p>
+    {% endfor %}
+    </div>
+</div>
+{% endspaceless %}

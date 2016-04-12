@@ -1,0 +1,7 @@
+django==1.8.9
+django-cms==3.2.3
+djangocms-text-ckeditor
+django-oscar>=1.1
+django-taggit
+django-taggit-autosuggest
+# Additional requirements go here

@@ -1,0 +1,65 @@
+{% extends "oscar_news/base.html" %}
+{% load i18n thumbnail %}{% spaceless %}
+    {% block header %}
+    <header>
+        <h2>
+        {% if author %}{% trans "Articles by" %} {{ author.get_full_name }}
+        {% elif archive_date %}{% trans "Archive" %} &ndash; {% if month %}{{ archive_date|date:'F' }} {% endif %}{{ year }}
+        {% elif tagged_entries %}{% trans "Tag" %} &ndash; {{ tagged_entries.name|capfirst }}
+        {% elif category %}{% trans "Category" %} &ndash; {{ category }}{% endif %}
+        </h2>
+    </header>
+    {% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{{ homepage_url }}">{% trans "Home" %}</a>
+        </li>
+        <li>
+            <a href="{% url 'oscar_news:index' %}">{% trans "News" %}</a>
+        </li>
+        {% if category %}
+          {% for category in category.get_ancestors %}
+              <li>
+                  <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+              </li>
+          {% endfor %}
+          <li class="active">{{ category.name }}</li>
+        {% endif %}
+        {% if tagged_entries %}
+          <li class="active">{% trans "Tags" %}</li>
+          <li>
+            <a href="{% url 'oscar_news:tagged-list' tag=tagged_entries.slug %}">{{ tagged_entries.name|capfirst }}</a>
+          </li>
+        {% endif %}
+    </ul>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<section class="news-list">
+
+    {% for post in news_entries_list %}
+        {% include "oscar_news/partials/news_item.html" with post=post image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT category=category%}
+    {% empty %}
+    <p class="blog-empty">{% trans "No article found." %}</p>
+    {% endfor %}
+    {% if author or archive_date or tagged_entries %}
+    <p class="blog-back"><a href="{% url 'oscar_news:index' %}">{% trans "Back" %}</a></p>
+    {% endif %}
+    {% if is_paginated %}
+    <nav class="{% firstof css_grid instance.css_grid %} pagination">
+        {% if page_obj.has_previous %}
+            <a href="?{{ view.page_kwarg }}={{ page_obj.previous_page_number }}">&laquo; {% trans "previous" %}</a>
+        {% endif %}
+        <span class="current">
+            {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ paginator.num_pages }}
+        </span>
+        {% if page_obj.has_next %}
+            <a href="?{{ view.page_kwarg }}={{ page_obj.next_page_number }}">{% trans "next" %} &raquo;</a>
+        {% endif %}
+    </nav>
+    {% endif %}
+</section>
+{% endblock %}
+{% endspaceless %}

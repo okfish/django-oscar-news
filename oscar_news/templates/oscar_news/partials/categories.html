@@ -1,0 +1,26 @@
+{% load i18n %}{% spaceless %}
+<div class="plugin plugin-news">
+    <h3>{% trans "News Categories" %}</h3>
+    <ul class="news-categories">
+        {% for category, info in categories %}
+            {% if info.open %}
+                <ul><li>
+            {% else %}
+                </li><li>
+            {% endif %}
+            <a href="{% url 'oscar_news:category-list' category=category.slug %}" class="news-categories-{{ category.count }}">
+                {{ category.name }}</a>
+                <span>(
+                    {% if category.news_category.count > 0 %}
+                    {% blocktrans count articles=category.news_category.count %}1 article{% plural %}{{ articles }} articles{% endblocktrans %}
+                    {% else %}{% trans "0 articles" %}{% endif %}
+                )</span>
+            {% for close in info.close %}
+                </li></ul>
+            {% endfor %}
+        {% empty %}
+            <li class="news-empty"><p>{% trans "No categories found." %}</p></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endspaceless %}

@@ -1,0 +1,54 @@
+{% extends "oscar_news/base.html" %}
+{% load smart_load %}
+{% load i18n cms_tags browse_product_short %}
+{% load thumbnail from easy_thumbnails %}
+
+{% block description %}{{ news_entry.meta_description }}{% endblock %}
+{% block keywords %}{{ news_entry.meta_keywords }}{% endblock %}
+
+{% block title %}{{ news_entry.title }}{% endblock %}
+
+{% block content %}{% spaceless %}
+<article id="post-{{ news_entry.slug }}" class="post-item post-detail">
+    <header>
+        <h2>{% render_model news_entry "title" %}</h2>
+    </header>
+    <div class="news-description">{% render_model news_entry "description" %}</div>{% endspaceless %}
+    <div class="news-content">{% render_placeholder news_entry.content %}</div>
+    <div class="news-images">
+      {% for image in news_entry.images.all %}
+        {% thumbnail image 100x100 crop upscale subject_location=image.subject_location as thumb %}
+        <a href="{{ image.url }}"><img src="{{ thumb.url }}"></a>
+      {% endfor %}
+    </div>
+  {% include "oscar_news/partials/tags.html" with tags=news_entry.tags.all %}
+    <div class="news-shop-classes">
+      <ol>
+        {% for class in news_entry.linked_classes.all %}
+          <li>{{ class.name }}</li>
+        {% endfor %}
+      </ol>
+    </div>
+    <div class="news-shop-categories">
+      <ol>
+        {% for category in news_entry.linked_categories.all %}
+          <li>{{ category.full_name }}</li>
+        {% endfor %}
+       </ol>
+    </div>
+    <div class="news-products">
+      {% for product in news_entry.linked_products.all %}
+        {% browse_thumb product %}
+      {% endfor %}
+    </div>
+    <footer class="news-nav">
+      {% if previous_entry %}
+        <a href="{{ previous_entry.get_absolute_url }}" >&laquo; {{ previous_entry.title }}</a>
+      {% endif %}
+      {% if next_entry %}
+        <a href="{{ next_entry.get_absolute_url }}" >{{ next_entry.title }} &raquo;</a>
+      {% endif %}
+    </footer>
+
+</article>
+{% endblock content %}
