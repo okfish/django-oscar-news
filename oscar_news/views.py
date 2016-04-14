@@ -19,7 +19,7 @@ User = get_user_model()
 
 NEWS_LIST_TRUNCWORDS_COUNT = getattr(settings, 'NEWS_LIST_TRUNCWORDS_COUNT', None)
 NEWS_LIST_PAGINATION = getattr(settings, 'NEWS_LIST_PAGINATION', 5)
-
+CURRENT_POST_IDENTIFIER = getattr(settings,'CURRENT_POST_IDENTIFIER', 'oscar_news_current')
 
 class BaseNewsView(object):
     model = News
@@ -52,6 +52,7 @@ class EntryDetailView(BaseNewsView, DetailView):
             context['next_entry'] = self.get_object().get_next_by_date_published()
         except self.model.DoesNotExist:
             pass
+        setattr(self.request, CURRENT_POST_IDENTIFIER, self.get_object())
         return context
 
 
