@@ -12,3 +12,8 @@ History
 ++++++++++++++++++++++
 
 * Main codebase ready to commit and alpha-testing
+
+0.1.1-dev (2014-04-14)
+++++++++++++++++++++++
+
+* CMS toolbar added
