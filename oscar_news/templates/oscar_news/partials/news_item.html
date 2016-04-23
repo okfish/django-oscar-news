@@ -20,7 +20,11 @@
         {% endif %}
     </div>
     <div class="news-tags">
-      {% include 'oscar_news/partials/tags.html' with tags=post.get_tags %}
+    {% if request.toolbar.edit_mode %}
+      {% include "oscar_news/partials/tags.html" with tags=post.get_all_tags %}
+    {% else %}
+      {% include "oscar_news/partials/tags.html" with tags=post.get_tags %}
+    {% endif %}
     </div>
     <footer class="read-more">
         <a href="{{ post.get_absolute_url }}">{% trans "read more" %} &raquo;</a>

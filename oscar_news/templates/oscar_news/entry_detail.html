@@ -21,7 +21,11 @@
         <a href="{{ image.url }}"><img src="{{ thumb.url }}"></a>
       {% endfor %}
     </div>
-  {% include "oscar_news/partials/tags.html" with tags=news_entry.tags.all %}
+    {% if request.toolbar.edit_mode %}
+      {% include "oscar_news/partials/tags.html" with tags=news_entry.get_all_tags %}
+    {% else %}
+      {% include "oscar_news/partials/tags.html" with tags=news_entry.get_tags %}
+    {% endif %}
     <div class="news-shop-classes">
       <ol>
         {% for class in news_entry.linked_classes.all %}
