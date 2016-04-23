@@ -16,13 +16,12 @@ from cms.models import CMSPlugin, PlaceholderField
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 from taggit_autosuggest.managers import TaggableManager
-from taggit.models import TaggedItem, Tag
+from taggit.models import TaggedItem
 
 from oscar.core.utils import slugify
 from oscar.core.compat import AUTH_USER_MODEL
 from oscar.models.fields import AutoSlugField
 from oscar.apps.catalogue.abstract_models import AbstractCategory
-# from oscar.core.loading import get_classes, get_model, get_class
 
 # TODO: move defaults to the app's settings module
 ENABLE_COMMENTS = getattr(settings, 'ENABLE_COMMENTS', False)
@@ -30,36 +29,41 @@ AUTHOR_DEFAULT = getattr(settings, 'AUTHOR_DEFAULT', True)
 LATEST_NEWS = getattr(settings, 'LATEST_NEWS', 3)
 
 
+# it's not the best place for this method but i've not found yet better way to show
+# annotated tags for each instance and keep it DRY :)
+def get_tag_cloud(model, queryset, tags_filter=None):
+    if tags_filter is None:
+        tags_filter = set()
+        for item in queryset.all():
+            tags_filter.update(item.tags.all())
+
+    tags_filter = set([tag.id for tag in tags_filter])
+    tags = set(TaggedItem.objects.filter(
+        content_type__model=model.__name__.lower()
+    ).values_list('tag_id', flat=True))
+
+    if tags_filter is not None:
+        tags = tags.intersection(tags_filter)
+    tag_ids = list(tags)
+
+    kwargs = TaggedItem.bulk_lookup_kwargs(queryset)
+    kwargs['tag_id__in'] = tag_ids
+    counted_tags = dict(TaggedItem.objects
+                                  .filter(**kwargs)
+                                  .values('tag')
+                                  .annotate(count=models.Count('tag'))
+                                  .values_list('tag', 'count'))
+    tags = TaggedItem.tag_model().objects.filter(pk__in=counted_tags.keys())
+    for tag in tags:
+        tag.count = counted_tags[tag.pk]
+    return sorted(tags, key=lambda x: -x.count)
+
+
 class NewsManager(models.Manager):
 
     def tag_cloud(self):
-
         queryset = self.get_queryset()
-        tfilter = set()
-
-        for item in queryset.all():
-            tfilter.update(item.tags.all())
-
-        tfilter = set([tag.id for tag in tfilter])
-        tags = set(TaggedItem.objects.filter(
-            content_type__model=self.model.__name__.lower()
-        ).values_list('tag_id', flat=True))
-
-        if tfilter is not None:
-            tags = tags.intersection(tfilter)
-        tag_ids = list(tags)
-
-        kwargs = TaggedItem.bulk_lookup_kwargs(queryset)
-        kwargs['tag_id__in'] = tag_ids
-        counted_tags = dict(TaggedItem.objects
-                                      .filter(**kwargs)
-                                      .values('tag')
-                                      .annotate(count=models.Count('tag'))
-                                      .values_list('tag', 'count'))
-        tags = TaggedItem.tag_model().objects.filter(pk__in=counted_tags.keys())
-        for tag in tags:
-            tag.count = counted_tags[tag.pk]
-        return sorted(tags, key=lambda x: -x.count)
+        return get_tag_cloud(self.model, queryset)
 
 
 class PublishedNewsManager(NewsManager):
@@ -153,7 +157,7 @@ class News(models.Model):
     @property
     def is_published(self):
         """
-        Checks wether the blog post is *really* published by checking publishing dates too
+        Checks whether the news entry is *really* published by checking publishing dates too
         """
         return (self.publish and
                 (self.date_published and self.date_published <= timezone.now()) and
@@ -182,33 +186,19 @@ class News(models.Model):
             cache.set(cache_key, url)
         return url
 
-    def get_tags(self):
+    def get_tags(self, queryset=None):
         """
-        Returns the list of object tags annotated with counters
+        :return: the list of object's tags annotated with counters.
+        Tags are limited by published news.
         """
-        # TODO: DRY it e.g. like in djangocms-blog did as for now it looks weird
-        tfilter = set(self.tags.all())
+        queryset = queryset or News.published.get_queryset()
+        return get_tag_cloud(self.__class__, queryset, set(self.tags.all()))
 
-        tfilter = set([tag.id for tag in tfilter])
-        tags = set(TaggedItem.objects.filter(
-            content_type__model=self.__class__.__name__.lower()
-        ).values_list('tag_id', flat=True))
-
-        if tfilter is not None:
-            tags = tags.intersection(tfilter)
-        tag_ids = list(tags)
-
-        kwargs = TaggedItem.bulk_lookup_kwargs(News.published.get_queryset())
-        kwargs['tag_id__in'] = tag_ids
-        counted_tags = dict(TaggedItem.objects
-                                      .filter(**kwargs)
-                                      .values('tag')
-                                      .annotate(count=models.Count('tag'))
-                                      .values_list('tag', 'count'))
-        tags = TaggedItem.tag_model().objects.filter(pk__in=counted_tags.keys())
-        for tag in tags:
-            tag.count = counted_tags[tag.pk]
-        return sorted(tags, key=lambda x: -x.count)
+    def get_all_tags(self):
+        """
+        :return: List of all object's tags including unpublished
+        """
+        return self.get_tags(News.objects.all())
 
 
 class NewsCategory(AbstractCategory):
@@ -263,8 +253,6 @@ class BaseNewsPlugin(CMSPlugin):
 
     def post_queryset(self, request=None):
         entries = News._default_manager
-        # if self.app_name:
-        #     entries = entries.namespace(self.app_name)
         if not request or not getattr(request, 'toolbar', False) or not request.toolbar.edit_mode:
             entries = News.published
         return entries.all()
