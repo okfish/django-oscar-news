@@ -7,7 +7,7 @@ Simple news app for Oscar E-Commerce sites based on Django-CMS.
 Documentation
 -------------
 
-The full documentation is at https://django-oscar-news.readthedocs.org.
+The full documentation will be at https://django-oscar-news.readthedocs.org sometimes :)
 
 Quickstart
 ----------
@@ -32,9 +32,9 @@ Features
 * Django-CMS app hook
 * Django-CMS plugins for latest filtered news, for category tree and for tags cloud
 * Django-CMS front-editable fields for news title and description
+* Django-CMS toolbar
 
 * TODO:
-    * Django-CMS toolbar
     * django-meta
     * feeds
     * Tests-tests-tests
@@ -43,7 +43,7 @@ Features
 Running Tests
 --------------
 
-Does the code actually work?
+Sorry, no test yet :( But you are welcome :)
 
 ::
 
