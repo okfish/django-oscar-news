@@ -47,7 +47,10 @@ class NewsTagsPlugin(NewsPlugin):
 
     def render(self, context, instance, placeholder):
         context = super(NewsTagsPlugin, self).render(context, instance, placeholder)
-        qs = News.published
+        request = context['request']
+        qs = News._default_manager
+        if not getattr(request, 'toolbar', False) or not request.toolbar.edit_mode:
+            qs = News.published
         context['tags'] = qs.tag_cloud()
         return context
 
