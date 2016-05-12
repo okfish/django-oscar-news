@@ -61,6 +61,11 @@ def get_tag_cloud(model, queryset, tags_filter=None):
 
 class NewsManager(models.Manager):
 
+    def __init__(self, *args, **kwargs):
+        self.published_query = Q(publish=True) & Q(date_published__lte=timezone.now()) & \
+                           (Q(date_published_end__isnull=True) | Q(date_published_end__gte=timezone.now()))
+        super(NewsManager, self).__init__(*args, **kwargs)
+
     def tag_cloud(self):
         queryset = self.get_queryset()
         return get_tag_cloud(self.model, queryset)
@@ -72,11 +77,7 @@ class PublishedNewsManager(NewsManager):
         date in the future
     """
     def get_queryset(self):
-        return super(PublishedNewsManager, self).get_queryset().filter(publish=True).\
-                                                                filter(date_published__lte=timezone.now()).\
-                                                                filter(Q(date_published_end__isnull=True) |
-                                                                       Q(date_published_end__gte=timezone.now())
-                                                                       )
+        return super(PublishedNewsManager, self).get_queryset().filter(self.published_query)
 
 
 class News(models.Model):
@@ -199,6 +200,29 @@ class News(models.Model):
         :return: List of all object's tags including unpublished
         """
         return self.get_tags(News.objects.all())
+
+    def _get_next_or_previous_published(self, is_next):
+        if not self.pk:
+            raise ValueError("get_next/get_previous cannot be used on unsaved objects.")
+        op = 'gt' if is_next else 'lt'
+        order = '' if is_next else '-'
+        field = 'date_published'
+        param = force_text(getattr(self, field))
+        q = Q(**{'%s__%s' % (field, op): param})
+        q = q | Q(**{field: param, 'pk__%s' % op: self.pk})
+        qs = self.__class__.published.using(self._state.db).filter(q).order_by(
+            '%s%s' % (order, field), '%spk' % order
+        )
+        try:
+            return qs[0]
+        except IndexError:
+            raise self.DoesNotExist("%s matching query does not exist." % self.__class__._meta.object_name)
+
+    def get_next_published(self):
+        return self._get_next_or_previous_published(is_next=True)
+
+    def get_previous_published(self):
+        return self._get_next_or_previous_published(is_next=False)
 
 
 class NewsCategory(AbstractCategory):

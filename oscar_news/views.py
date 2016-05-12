@@ -45,11 +45,17 @@ class EntryDetailView(BaseNewsView, DetailView):
     def get_context_data(self, **kwargs):
         context = super(EntryDetailView, self).get_context_data(**kwargs)
         try:
-            context['previous_entry'] = self.get_object().get_previous_by_date_published()
+            if not getattr(self.request, 'toolbar', False) or not self.request.toolbar.edit_mode:
+                context['previous_entry'] = self.get_object().get_previous_published()
+            else:
+                context['previous_entry'] = self.get_object().get_previous_by_date_published()
         except self.model.DoesNotExist:
             pass
         try:
-            context['next_entry'] = self.get_object().get_next_by_date_published()
+            if not getattr(self.request, 'toolbar', False) or not self.request.toolbar.edit_mode:
+                context['next_entry'] = self.get_object().get_next_published()
+            else:
+                context['next_entry'] = self.get_object().get_next_by_date_published()
         except self.model.DoesNotExist:
             pass
         setattr(self.request, CURRENT_POST_IDENTIFIER, self.get_object())
