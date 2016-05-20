@@ -1,0 +1,312 @@
+# Russian locale for the Django-oscar-news app.
+# Copyright (C) 2016, Oleg Rybkin
+# This file is distributed under the same license as the django-oscar-news package.
+# Oleg Rybkin aka Fish <okfish@yandex.ru>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: django-oscar-news\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-20 21:52+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Oleg Rybkin aka Fish <okfish@yandex.ru>\n"
+"Language-Team: Russian <team@teleme.ru>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:65
+msgid "Info"
+msgstr "Информация"
+
+#: admin.py:71
+msgid "SEO"
+msgstr "Поисковая оптимизация"
+
+#: admin.py:75
+msgid "E-Commerce"
+msgstr "Е-коммерция"
+
+#: cms_app.py:17
+msgid "News for Oscar E-Commerce"
+msgstr "Новости для магазина Oscar"
+
+#: cms_plugins.py:17 cms_toolbar.py:33 cms_toolbar.py:37 models.py:154
+#: models.py:155 models.py:270 templates/oscar_news/entries_list.html:20
+msgid "News"
+msgstr "Новости"
+
+#: cms_plugins.py:28
+msgid "Latest News"
+msgstr "Последние новости"
+
+#: cms_plugins.py:44 templates/oscar_news/partials/tags.html:3
+msgid "News Tags"
+msgstr "Метки новостей"
+
+#: cms_plugins.py:59 models.py:258
+#: templates/oscar_news/partials/categories.html:3
+msgid "News Categories"
+msgstr "Категории новостей"
+
+#: cms_toolbar.py:11
+msgid "Site"
+msgstr "Сайт"
+
+#: cms_toolbar.py:24
+msgid "News overview"
+msgstr "Обзор списка новостей"
+
+#: cms_toolbar.py:25
+msgid "Add news"
+msgstr "Добавить новость"
+
+#: cms_toolbar.py:27
+msgid "News categories"
+msgstr "Категории новостей"
+
+#: cms_toolbar.py:28
+msgid "Add category"
+msgstr "Добавить категорию"
+
+#: cms_toolbar.py:50
+#, python-brace-format
+msgid "Publish {0} now"
+msgstr "Опубликовать {0} сейчас"
+
+#: config.py:8
+msgid "Simple News app for Oscar and Django-CMS"
+msgstr "Простое новостное приложение для магазина Oscar и Django-CMS"
+
+#: menu.py:13
+msgid "News Categories Menu"
+msgstr "Меню категорий новостей"
+
+#: models.py:88
+msgid "author"
+msgstr "автор"
+
+#: models.py:91
+msgid "category"
+msgstr "Категория"
+
+#: models.py:95
+msgid "news meta description"
+msgstr "мета-описание новости"
+
+#: models.py:97
+msgid "news meta keywords"
+msgstr "ключевые слова для тега meta"
+
+#: models.py:99
+msgid "news meta title"
+msgstr "мета-заголовок новости"
+
+#: models.py:100
+msgid "used in title tag and social sharing"
+msgstr "используется в теге title для публикаций в соцсетях"
+
+#: models.py:104
+msgid "Title"
+msgstr "Заголовок"
+
+#: models.py:105
+msgid "Slug"
+msgstr "Код для URL"
+
+#: models.py:107
+msgid "A slug is a short name which uniquely identifies the news item"
+msgstr ""
+"Код - это короткое название, которое идентифицирует новостной пост "
+"уникальным образом"
+
+#: models.py:109
+msgid "Description"
+msgstr "Описание"
+
+#: models.py:112
+msgid "Published"
+msgstr "Опубликовано"
+
+#: models.py:114
+msgid "created"
+msgstr "создано"
+
+#: models.py:115
+msgid "last modified"
+msgstr "последнее изменение"
+
+#: models.py:116
+msgid "published since"
+msgstr "опубликовано с"
+
+#: models.py:117
+msgid "published until"
+msgstr "опубликовано по"
+
+#: models.py:119
+msgid "enable comments on post"
+msgstr "включить комментарии к новости"
+
+#: models.py:123
+msgid "News images"
+msgstr "Картинки для новости"
+
+#: models.py:128
+msgid "Linked products"
+msgstr "Связанные товары"
+
+#: models.py:129
+msgid ""
+"These are products that can be shown with news post or news post can be "
+"shown on the specific product's page."
+msgstr ""
+"Товары, которые могут быть показаны с этой новостьюили на страницах которых "
+"новость может быть отображена."
+
+#: models.py:133
+msgid "Linked product's categories"
+msgstr "Связанные категории товаров"
+
+#: models.py:134
+msgid "Show news for that categories or display news on the category page"
+msgstr ""
+"Показывать новости для этих категорий товаров или отображать их на странице "
+"категории"
+
+#: models.py:138
+msgid "Linked product's classes"
+msgstr "Связанные типы товаров"
+
+#: models.py:139
+msgid ""
+"Show news for that classes or display news on the specific class product's "
+"pages"
+msgstr ""
+"Покахывать новости для этих типов товара или отображать их только на "
+"страницах специфических товаров"
+
+#: models.py:142
+msgid "Site(s)"
+msgstr "Сайт(ы)"
+
+#: models.py:143
+msgid ""
+"Select sites in which to show the post. If none is set it will be visible in "
+"all the configured sites."
+msgstr ""
+"Выберите сайты, на которых новость будет показана. Оставьте поле пустым, "
+"чтобы новость была видна на всех сайтах"
+
+#: models.py:257
+msgid "News Category"
+msgstr "Категория новостей"
+
+#: models.py:290
+msgid "articles"
+msgstr "статьи"
+
+#: models.py:291
+msgid "The number of latests articles to be displayed."
+msgstr "Количество последних новостных статей, которые будут показаны"
+
+#: models.py:293
+msgid "filter by tag"
+msgstr "фильтровать по метке"
+
+#: models.py:294
+msgid "Show only the blog articles tagged with chosen tags."
+msgstr "Показывать только статьи, помеченные выбранными метками"
+
+#: models.py:298
+msgid "filter by category"
+msgstr "фильтровать по категории"
+
+#: models.py:299
+msgid "Show only the blog articles tagged with chosen categories."
+msgstr "Показывать только статьи, отнесенные к выбранной категории"
+
+#: models.py:304
+#, python-format
+msgid "%s latest articles by tag"
+msgstr "%s последних статей по метке"
+
+#: models.py:327
+msgid "generic news plugin"
+msgstr "основной плагин новостей"
+
+#: templates/oscar_news/entries_list.html:6
+msgid "Articles by"
+msgstr "Статьи автора"
+
+#: templates/oscar_news/entries_list.html:7
+msgid "Archive"
+msgstr "Архив"
+
+#: templates/oscar_news/entries_list.html:8
+msgid "Tag"
+msgstr "Метка"
+
+#: templates/oscar_news/entries_list.html:9
+msgid "Category"
+msgstr "Категория"
+
+#: templates/oscar_news/entries_list.html:17
+msgid "Home"
+msgstr "Начало"
+
+#: templates/oscar_news/entries_list.html:31
+msgid "Tags"
+msgstr "Метки"
+
+#: templates/oscar_news/entries_list.html:45
+#: templates/oscar_news/partials/latest_entries.html:7
+msgid "No article found."
+msgstr "Статей не найдено."
+
+#: templates/oscar_news/entries_list.html:48
+msgid "Back"
+msgstr "Назад"
+
+#: templates/oscar_news/entries_list.html:53
+msgid "previous"
+msgstr "предыдущая"
+
+#: templates/oscar_news/entries_list.html:56
+msgid "Page"
+msgstr "Страница"
+
+#: templates/oscar_news/entries_list.html:56
+msgid "of"
+msgstr "из"
+
+#: templates/oscar_news/entries_list.html:59
+msgid "next"
+msgstr "следующая"
+
+#: templates/oscar_news/partials/categories.html:15
+#: templates/oscar_news/partials/tags.html:10
+#, python-format
+msgid "1 article"
+msgid_plural "%(articles)s articles"
+msgstr[0] "1 статья"
+msgstr[1] "%(articles)s статей"
+
+#: templates/oscar_news/partials/categories.html:16
+#: templates/oscar_news/partials/tags.html:11
+msgid "0 articles"
+msgstr "0 статей"
+
+#: templates/oscar_news/partials/categories.html:22
+msgid "No categories found."
+msgstr "Категорий не найдено."
+
+#: templates/oscar_news/partials/news_item.html:30
+msgid "read more"
+msgstr "читать дальше"
+
+#: templates/oscar_news/partials/tags.html:15
+msgid "No tags found"
+msgstr "Меток не найдено"
