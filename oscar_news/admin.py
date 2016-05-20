@@ -62,21 +62,17 @@ class NewsAdmin(FrontendEditableAdminMixin, PlaceholderAdminMixin,  ModelAdmin):
                        ('description', )
                        ]
         }),
-        ('Info', {
+        (_('Info'), {
             'fields': [('slug', 'tags'),
                        ('date_published', 'date_published_end', ),
                        ('enable_comments',)],
             'classes': ('collapse',)
         }),
-         # ('Images', {
-         #     'fields': (('images',),),
-         #     'classes': ('collapse',)
-         # }),
-        ('SEO', {
+        (_('SEO'), {
             'fields': [('meta_description', 'meta_title', 'meta_keywords')],
             'classes': ('collapse',)
         }),
-        ('E-Commerce', {
+        (_('E-Commerce'), {
             'fields': [('linked_classes', 'linked_categories', 'linked_products')],
             'classes': ('collapse',)
         }),

@@ -87,7 +87,9 @@ class News(models.Model):
     author = models.ForeignKey(AUTH_USER_MODEL,
                                verbose_name=_('author'), null=True, blank=True,
                                related_name='news_author')
-    category = models.ForeignKey("NewsCategory", related_name="news_category",
+    category = models.ForeignKey("NewsCategory",
+                                 verbose_name=_('category'),
+                                 related_name="news_category",
                                  null=True, blank=True, default=None)
 
     meta_description = models.TextField(verbose_name=_('news meta description'),
@@ -117,7 +119,8 @@ class News(models.Model):
     enable_comments = models.BooleanField(verbose_name=_('enable comments on post'),
                                           default=ENABLE_COMMENTS)
 
-    images = models.ManyToManyField('filer.Image', through='NewsImages')
+    images = models.ManyToManyField('filer.Image', through='NewsImages',
+                                    verbose_name=_("News images"),)
 
     # Oscar links
     linked_products = models.ManyToManyField(
