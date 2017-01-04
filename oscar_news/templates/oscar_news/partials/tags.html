@@ -6,9 +6,9 @@
             <li><a href="{% url 'oscar_news:tagged-list' tag=tag.slug %}" class="news-tag-{{ tag.pk }}">
                 {{ tag.name }}
                 <span>(
-                    {% if tag.count > 0 %}
-                    {% blocktrans count articles=tag.count %}1 article{% plural %}{{ articles }} articles{% endblocktrans %}
-                    {% else %}{% trans "0 articles" %}{% endif %}
+                  {% if tag.count > 0 %}
+                  {% blocktrans count articles=tag.count %}{{ articles }} article{% plural %}{{ articles }} articles{% endblocktrans %}
+                  {% else %}{% trans "0 articles" %}{% endif %}
                 )</span>
             </a></li>
         {% empty %}

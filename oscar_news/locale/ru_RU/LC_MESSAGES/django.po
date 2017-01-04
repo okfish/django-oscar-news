@@ -3,19 +3,21 @@
 # This file is distributed under the same license as the django-oscar-news package.
 # Oleg Rybkin aka Fish <okfish@yandex.ru>, 2016.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: django-oscar-news\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 21:52+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Oleg Rybkin aka Fish <okfish@yandex.ru>\n"
+"POT-Creation-Date: 2016-08-06 21:12+0300\n"
+"PO-Revision-Date: 2016-08-06 21:15+0300\n"
+"Last-Translator: wa3x <wa3x@yandex.ru>\n"
 "Language-Team: Russian <team@teleme.ru>\n"
-"Language: \n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: admin.py:65
 msgid "Info"
@@ -72,7 +74,6 @@ msgid "Add category"
 msgstr "Добавить категорию"
 
 #: cms_toolbar.py:50
-#, python-brace-format
 msgid "Publish {0} now"
 msgstr "Опубликовать {0} сейчас"
 
@@ -289,10 +290,11 @@ msgstr "следующая"
 #: templates/oscar_news/partials/categories.html:15
 #: templates/oscar_news/partials/tags.html:10
 #, python-format
-msgid "1 article"
+msgid "%(articles)s article"
 msgid_plural "%(articles)s articles"
-msgstr[0] "1 статья"
-msgstr[1] "%(articles)s статей"
+msgstr[0] "%(articles)s статья"
+msgstr[1] "%(articles)s статьи"
+msgstr[2] "%(articles)s статей"
 
 #: templates/oscar_news/partials/categories.html:16
 #: templates/oscar_news/partials/tags.html:11
@@ -310,3 +312,8 @@ msgstr "читать дальше"
 #: templates/oscar_news/partials/tags.html:15
 msgid "No tags found"
 msgstr "Меток не найдено"
+
+#~ msgid "1 article"
+#~ msgid_plural "%(articles)s articles"
+#~ msgstr[0] "1 статья"
+#~ msgstr[1] "%(articles)s статей"
