@@ -30,7 +30,7 @@ class NewsLatestEntriesPlugin(NewsPlugin):
     form = LatestEntriesForm
     filter_horizontal = ('category',)
     fields = ('latest_posts', 'tags', 'category')
-    cache = False
+    cache = True
     base_render_template = 'partials/latest_entries.html'
 
     def render(self, context, instance, placeholder):
