@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-oscar-news\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-06 21:12+0300\n"
+"POT-Creation-Date: 2017-03-08 14:03+0300\n"
 "PO-Revision-Date: 2016-08-06 21:15+0300\n"
 "Last-Translator: wa3x <wa3x@yandex.ru>\n"
 "Language-Team: Russian <team@teleme.ru>\n"
@@ -31,11 +31,11 @@ msgstr "Поисковая оптимизация"
 msgid "E-Commerce"
 msgstr "Е-коммерция"
 
-#: cms_app.py:17
+#: cms_apps.py:17
 msgid "News for Oscar E-Commerce"
 msgstr "Новости для магазина Oscar"
 
-#: cms_plugins.py:17 cms_toolbar.py:33 cms_toolbar.py:37 models.py:154
+#: cms_plugins.py:17 cms_toolbars.py:33 cms_toolbars.py:37 models.py:154
 #: models.py:155 models.py:270 templates/oscar_news/entries_list.html:20
 msgid "News"
 msgstr "Новости"
@@ -53,27 +53,28 @@ msgstr "Метки новостей"
 msgid "News Categories"
 msgstr "Категории новостей"
 
-#: cms_toolbar.py:11
+#: cms_toolbars.py:11
 msgid "Site"
 msgstr "Сайт"
 
-#: cms_toolbar.py:24
+#: cms_toolbars.py:24
 msgid "News overview"
 msgstr "Обзор списка новостей"
 
-#: cms_toolbar.py:25
+#: cms_toolbars.py:25
 msgid "Add news"
 msgstr "Добавить новость"
 
-#: cms_toolbar.py:27
+#: cms_toolbars.py:27
 msgid "News categories"
 msgstr "Категории новостей"
 
-#: cms_toolbar.py:28
+#: cms_toolbars.py:28
 msgid "Add category"
 msgstr "Добавить категорию"
 
-#: cms_toolbar.py:50
+#: cms_toolbars.py:50
+#, python-brace-format
 msgid "Publish {0} now"
 msgstr "Опубликовать {0} сейчас"
 
@@ -186,7 +187,7 @@ msgid ""
 "Show news for that classes or display news on the specific class product's "
 "pages"
 msgstr ""
-"Покахывать новости для этих типов товара или отображать их только на "
+"Показывать новости для этих типов товара или отображать их только на "
 "страницах специфических товаров"
 
 #: models.py:142
